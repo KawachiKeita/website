@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+
+<head>
+  <script src="../assets/js/color-modes.js"></script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.112.5">
+  <title>Blog Template · Bootstrap v5.3</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/blog/">
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+
+  <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+
+    .b-example-divider {
+      width: 100%;
+      height: 3rem;
+      background-color: rgba(0, 0, 0, .1);
+      border: solid rgba(0, 0, 0, .15);
+      border-width: 1px 0;
+      box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+    }
+
+    .b-example-vr {
+      flex-shrink: 0;
+      width: 1.5rem;
+      height: 100vh;
+    }
+
+    .bi {
+      vertical-align: -.125em;
+      fill: currentColor;
+    }
+
+    .nav-scroller {
+      position: relative;
+      z-index: 2;
+      height: 2.75rem;
+      overflow-y: hidden;
+    }
+
+    .nav-scroller .nav {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: 1rem;
+      margin-top: -1px;
+      overflow-x: auto;
+      text-align: center;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .btn-bd-primary {
+      --bd-violet-bg: #712cf9;
+      --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+      --bs-btn-font-weight: 600;
+      --bs-btn-color: var(--bs-white);
+      --bs-btn-bg: var(--bd-violet-bg);
+      --bs-btn-border-color: var(--bd-violet-bg);
+      --bs-btn-hover-color: var(--bs-white);
+      --bs-btn-hover-bg: #6528e0;
+      --bs-btn-hover-border-color: #6528e0;
+      --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+      --bs-btn-active-color: var(--bs-btn-hover-color);
+      --bs-btn-active-bg: #5a23c8;
+      --bs-btn-active-border-color: #5a23c8;
+    }
+
+    .bd-mode-toggle {
+      z-index: 1500;
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="blog.css" rel="stylesheet">
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check2" viewBox="0 0 16 16">
+      <path
+        d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+    </symbol>
+    <symbol id="circle-half" viewBox="0 0 16 16">
+      <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+    </symbol>
+    <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+      <path
+        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+      <path
+        d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+    </symbol>
+    <symbol id="sun-fill" viewBox="0 0 16 16">
+      <path
+        d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+    </symbol>
+  </svg>
+
+  <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+    <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button"
+      aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme (auto)">
+      <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
+        <use href="#circle-half"></use>
+      </svg>
+      <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
+          aria-pressed="false">
+          <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+            <use href="#sun-fill"></use>
+          </svg>
+          Light
+          <svg class="bi ms-auto d-none" width="1em" height="1em">
+            <use href="#check2"></use>
+          </svg>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
+          aria-pressed="false">
+          <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+            <use href="#moon-stars-fill"></use>
+          </svg>
+          Dark
+          <svg class="bi ms-auto d-none" width="1em" height="1em">
+            <use href="#check2"></use>
+          </svg>
+        </button>
+      </li>
+      <li>
+        <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto"
+          aria-pressed="true">
+          <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em">
+            <use href="#circle-half"></use>
+          </svg>
+          Auto
+          <svg class="bi ms-auto d-none" width="1em" height="1em">
+            <use href="#check2"></use>
+          </svg>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="aperture" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+      stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94" />
+    </symbol>
+    <symbol id="cart" viewBox="0 0 16 16">
+      <path
+        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </symbol>
+    <symbol id="chevron-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+    </symbol>
+  </svg>
+
+  <div class="container">
+    <header class="border-bottom lh-1 py-3">
+      <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="col-4 pt-1">
+          <a class="link-secondary" href="#">before site</a>
+        </div>
+        <div class="col-4 text-center">
+          <a class="blog-header-logo text-body-emphasis text-decoration-none" href="#">SEKAINOOWARI UNOFFICIAL</a>
+        </div>
+        <div class="col-4 d-flex justify-content-end align-items-center">
+          <a class="link-secondary" href="#" aria-label="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+              stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
+              viewBox="0 0 24 24">
+              <title>Search</title>
+              <circle cx="10.5" cy="10.5" r="7.5" />
+              <path d="M21 21l-5.2-5.2" />
+            </svg>
+          </a>
+          <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="nav-scroller py-1 mb-3 border-bottom">
+      <nav class="nav nav-underline justify-content-between">
+        <a class="nav-item nav-link link-body-emphasis active" href="#">PROFILE</a>
+        <a class="nav-item nav-link link-body-emphasis" href="#">NEWS</a>
+        <a class="nav-item nav-link link-body-emphasis" href="#">SCHEDULE</a>
+        <a class="nav-item nav-link link-body-emphasis" href="#">GOODS</a>
+        <a class="nav-item nav-link link-body-emphasis" href="#">FANCLUB</a>
+        <a class="nav-item nav-link link-body-emphasis" href="#">CONTACT</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+      <div class="col-lg-6 px-0">
+        <h1 class="display-4 fst-italic">Welcome to SEKAI NO OWARI</h1>
+        <h4 class="lead my-3">残された音楽と今の仲間で、終わりからまた始めてみよう</h4>
+        <p class="lead mb-0"><a href="#" class="text-body-emphasis fw-bold">Our story is just beginning...</a></p>
+        <div class="col-auto d-none d-lg-block">
+          <img class="artist figure-img img-fluid rounded">
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary-emphasis">New Album</strong>
+            <h3 class="mb-0">scent of memory</h3>
+            <div class="mb-1 text-body-secondary">July 21</div>
+            <p class="card-text mb-auto">Virgin Musicから発売したメジャー5枚目（通算6枚目）のオリジナルアルバム。「香り」がコンセプトとなっている。</p>
+            <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+              Continue reading
+            </a>
+          </div>
+          <div class="col-auto d-none d-lg-block">
+            <img class="album">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-success-emphasis">New Single</strong>
+            <h3 class="mb-0　fst-serif">ターコイズ / サラバ / バタフライエフェクト</h3>
+            <div class="mb-1 text-body-secondary">June 28</div>
+            <p class="mb-auto">『Habit』から、約1年ぶりとなるシングルで、メジャーデビューシングル『INORI』から、約12年ぶりとなるトリプルA面シングル。</p>
+            <a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+              Continue reading
+            </a>
+          </div>
+          <div class="col-auto d-none d-lg-block">
+            <img class="single">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-8">
+        <h3 class="pb-4 mb-4 fst-italic border-bottom">
+          SEKAI NO OWARI（セカイノオワリ、英語: End of the World、中国語: 世界末日）
+        </h3>
+
+        <article class="blog-post">
+          <h2 class="display-5 link-body-emphasis mb-1 h1-color">概要</h2>
+          <p class="blog-post-meta">August 1, 2023 by <a href="#">Keita</a></p>
+
+          <p>2010年、突如音楽シーンに現れた4人組バント「SEKAI NO OWARI」。同年4月1stアルバム「EARTH」をリリース後、2011年8月にTOY’S
+            FACTORYよりメジャーデビュー。圧倒的なポップセンスとキャッチーな存在感、テーマパークの様な世界観溢れるライブ演出で、子供から大人まで幅広いリスナーにアプローチ、「セカオワ現象」とも呼ばれる加速度的なスピード感で認知を拡大する。2015年アルバム「Tree」をリリース、同年7月18日、19日には日本最大規模の会場日産スタジアムにて「Twilight
+            City」、2016年アリーナツアー「The
+            Dinner」、2017年ドーム・スタジアムツアー「タルカス」を完遂。2018年、その圧倒的なスケールで彼らのライブエンターテインメントを世の中に知らしめた野外ライブの全国版「INSOMNIA
+            TRAIN」を開催することを発表。また、同年2月平昌オリンピック・パラリンピックNHK放送テーマソング「サザンカ」を担当。2019年、約4年振りのアルバム「Eye」と「Lip」を2枚同時リリースした。名実ともに、日本を代表するグループとなったSEKAI
+            NO OWARI。新しい音楽シーンの最前線の旗手として、止まることなく、攻め続ける新世代の才能である。</p>
+          <hr>
+          <h2 class="h1-color">メンバー</h2>
+          <blockquote class="blockquote">
+            <p class="fukase">Fukase（深瀬慧）</p>
+          </blockquote>
+          <p>Fukase（ふかせ、1985年〈昭和60年〉10月13日 - ）は、日本のシンガーソングライター、ミュージシャン、俳優、絵本作家。東京都大田区出身。所属事務所はTOKYO
+            FANTASYで、所属レーベルはVirgin Music。4人組バンド・SEKAI NO OWARIのメンバー。本名は深瀬 智（ふかせ さとし）で、旧称は深瀬 慧</p>
+          <blockquote class="blockquote">
+            <p class="nakajin">Nakajin（中島真一）</p>
+          </blockquote>
+          <p>Nakajin（なかじん、1985年〈昭和60年〉10月22日 - ）は、日本のミュージシャン。旧称・本名は中島真一(なかしましんいち)。4人組ロックバンド・SEKAI NO
+            OWARIのメンバー。東京都大田区出身。</p>
+          <blockquote class="blockquote">
+            <p class="saori">Saori（藤崎彩織）</p>
+          </blockquote>
+          <p>Saori（さおり、1986年〈昭和61年〉8月13日 - ）は、日本のミュージシャン、小説家。本名は池田彩織（いけだ さおり）で、旧姓と旧称は藤崎彩織（ふじさき
+            さおり）。小説家として活動する際は旧姓名義を使用する。4人組ロックバンド・SEKAI NO OWARIのメンバー。大阪府吹田市生まれ、東京都大田区出身。</p>
+          <blockquote class="blockquote">
+            <p class="love">DJ LOVE（不明）</p>
+          </blockquote>
+          <p>DJ LOVE（ディージェイ・ラヴ、1985年〈昭和60年〉8月23日 - ）は、日本のミュージシャン。本名は非公表。4人組ロックバンド・SEKAI NO
+            OWARIのメンバー。東京都大田区出身。</p>
+          <hr>
+          <h3 class="h1-color">セカオワゆかりの地</h3>
+          <p>SEKAI NO OWARIの原点ともなる思い出の場所をメンバーのコメントと共に巡る</p>
+          <div id="mapid" style="width:100%;height:400px; border-radius:4px;"></div>
+          <script>
+            var mymap = L.map('mapid').setView([35.552281, 139.740162], 16);
+            L.tileLayer(
+              'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+            ).addTo(mymap);
+            var marker1 = L.marker([35.554103, 139.744893]).addTo(mymap);
+            var marker2 = L.marker([35.551568, 139.745126]).addTo(mymap);
+            var marker3 = L.marker([35.552994, 139.734515]).addTo(mymap);
+            var marker4 = L.marker([35.553497, 139.741692]).addTo(mymap);
+            var marker5 = L.marker([35.547044, 139.740265]).addTo(mymap);
+
+            marker1.bindPopup("clubEARTH").openPopup();
+            marker2.bindPopup("BAR EARTH").openPopup();
+            marker3.bindPopup("油そば専門店　笑麺亭").openPopup();
+            marker4.bindPopup("宝湯").openPopup();
+            marker5.bindPopup("羽田神社").openPopup();
+
+            function onMapClick(e) { alert("You clicked the map at " + e.latlng); } mymap.on('click', onMapClick);
+          </script>
+          <br>
+          <h5 class="h5-color">clubEARTH</h5>
+          <p>僕らがSEKAI NO OWARIを始める前に作り始めた秘密基地。2006年6月～2011年3月まではココが拠点でした。</p>
+          <h5 class="h5-color">BAR EARTH</h5>
+          <p>EARTHスタッフのセキュリティ担当のワルサがやっているBAR。友達であるワルサに会いによく行く。</p>
+          <h5 class="h5-color">油そば専門店　笑麺亭</h5>
+          <p>clubEARTHでライブをした後には毎回必ず通っていた油そば専門店。麺を食べきった後のチータンタンは必食</p>
+          <h5 class="h5-color">宝湯</h5>
+          <p>ライブ前にここに来るのは最高の贅沢だった。</p>
+          <h5 class="h5-color">羽田神社</h5>
+          <p>大みそかの夜にNakajinと2人で初詣の行列に並んで年越しの瞬間を迎えた。</p>
+          <hr>
+          <h3 class="h1-color">アルバム</h3>
+
+          <div id="carouselExampleDark" class="carousel carousel-dark slide">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1"
+                aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2"
+                aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3"
+                aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4"
+                aria-label="Slide 5"></button>
+              <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5"
+                aria-label="Slide 6"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="10000">
+                <div class="class1">
+                  <img src="fig/image.png" alt="scent of memory" width="500px" height="400px">
+                </div>
+                <div class="carousel-caption d-none d-md-block">
+                  <h1 class="white">scent of memory</h1>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <div class="class1">
+                  <img src="fig/image.png" alt="scent of memory" width="500px" height="400px">
+                </div>
+                <div class="carousel-caption d-none d-md-block">
+                  <h1 class="white">EYE</h1>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <div class="class1">
+                  <img src="fig/image.png" alt="scent of memory" width="500px" height="400px">
+                </div>
+                <div class="carousel-caption d-none d-md-block">
+                  <h1 class="white">LIP</h1>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <div class="class1">
+                  <img src="fig/image.png" alt="scent of memory" width="500px" height="400px">
+                </div>
+                <div class="carousel-caption d-none d-md-block">
+                  <h1 class="white">Tree</h1>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <div class="class1">
+                  <img src="fig/image.png" alt="scent of memory" width="500px" height="400px">
+                </div>
+                <div class="carousel-caption d-none d-md-block">
+                  <h1 class="white">ENTERTAINMENT</h1>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="2000">
+                <div class="class1">
+                  <img src="fig/image.png" alt="scent of memory" width="500px" height="400px">
+                </div>
+                <div class="carousel-caption d-none d-md-block">
+                  <h1 class="white">EARTH</h1>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+          <hr>
+          <h3 class="h1-color">ライブ</h3>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">開催年</th>
+                <th scope="col">タイトル</th>
+                <th scope="col">会場</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <tr>
+                <td>2010年</td>
+                <th scope="row">Heart the earth TOUR</th>
+                <td>20会場20公演</td>
+              </tr>
+              <tr>
+                <td>2011年</td>
+                <th scope="row">SEKAI NO OWARI at 武道館</th>
+                <td>1会場1公演</td>
+              </tr>
+              <tr>
+                <td>2012年</td>
+                <th scope="row">HALL TOUR 2012 「ENTERTAINMENT」</th>
+                <td>25会場25公演</td>
+              </tr>
+              <tr>
+                <td>2013年</td>
+                <th scope="row">炎と森のカーニバル</th>
+                <td>1会場3公演</td>
+              </tr>
+              <tr>
+                <td>2014年</td>
+                <th scope="row">TOKYO FANTASY</th>
+                <td>1会場3公演</td>
+              </tr>
+              <tr>
+                <td>2015年</td>
+                <th scope="row">Twilight City</th>
+                <td>1会場2公演</td>
+              </tr>
+              <tr>
+                <td>2016年</td>
+                <th scope="row">The Dinner</th>
+                <td>11会場25公演</td>
+              </tr>
+              <tr>
+                <td>2017年</td>
+                <th scope="row">タルカス</th>
+                <td>3会場5公演</td>
+              </tr>
+              <tr>
+                <td>2018年</td>
+                <th scope="row">INSOMNIA TRAIN</th>
+                <td>5会場12公演</td>
+              </tr>
+              <tr>
+                <td>2019年</td>
+                <th scope="row">The Colors</th>
+                <td>13会場28公演</td>
+              </tr>
+              <tr>
+                <td>2021-2022年</td>
+                <th scope="row">BLUE PLANET ORCHESTRA</th>
+                <td>7会場14公演</td>
+              </tr>
+              <tr>
+                <td>2022年</td>
+                <th scope="row">Du Gara Di Du</th>
+                <td>4会場5公演</td>
+              </tr>
+              <tr>
+                <td>2023年</td>
+                <th scope="row">Terminal</th>
+                <td>8会場15公演</td>
+              </tr>
+            </tbody>
+          </table>
+          <hr>
+          <h3>引用元</h3>
+          <p class="mb-0">
+          <h6>
+            ・SEKAI NO OWARI　official website &emsp; <a href="https://sekainoowari.jp/" target="_blank">SEKAI NO
+              OWARI（引用）</a>
+          </h6>
+          <h6>
+            ・SEKAI NO OWARI -Wikipedia- &emsp;
+            <a href="https://ja.wikipedia.org/wiki/SEKAI_NO_OWARI#%E3%83%A9%E3%82%A4%E3%83%96"
+              target="_blank">Wikipedia（引用）</a>
+          </h6>
+          </p>
+      </div>
+
+      <div class="col-md-4">
+        <div class="position-sticky" style="top: 2rem;">
+          <div class="p-4 mb-3 bg-body-tertiary rounded">
+            <h4 class="fst-italic">About Funclub</h4>
+            <p class="mb-0">
+              オフィシャルモバイルファンクラブ「S.N.O.W.S」。スマートフォンのように皆さんの身近に寄り添い、いつでもどこでも、SEKAI NO OWARIの情報やコンテンツをお届けいたします。
+              <a href="https://sp.sekainoowari.jp/pc/" target="_blank">S.N.O.W.S（引用）</a>
+              <br>
+              「R.A.I.N.S」は、個別シリアルナンバー（会員番号）が記載された会員証をはじめ、アーティストブックやバースデーカード、グリーティングカードなどが届く、手に取って、触れて感じていただける、「形」あるファンクラブです。
+              <a href="https://rains.sekainoowari.jp/mob/index.php?site=S&ima=3858" target="_blank">R.A.I.N.S（引用）</a>
+            </p>
+          </div>
+
+          <div>
+            <h4 class="fst-italic">Recent News</h4>
+            <ul class="list-unstyled">
+              <li>
+                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
+                  href="#">
+
+                  <img class="recent1">
+
+                  <div class="col-lg-8">
+                    <h6 class="mb-0">Fesグッズの販売が決定！</h6>
+                    <small class="text-body-secondary">July 31, 2023</small>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
+                  href="#">
+                  <img class="recent2">
+                  <div class="col-lg-8">
+                    <h6 class="mb-0">ターコイズネックレスの販売が決定！</h6>
+                    <small class="text-body-secondary">July 31, 2023</small>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top"
+                  href="#">
+                  <img class="recent3">
+                  <div class="col-lg-8">
+                    <h6 class="mb-0">ワンピースの新主題歌に決定！</h6>
+                    <small class="text-body-secondary">July 22, 2023</small>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="p-4">
+            <h4 class="fst-italic">Archives</h4>
+            <ol class="list-unstyled mb-0">
+              <li><a href="#">March 2021</a></li>
+              <li><a href="#">February 2021</a></li>
+              <li><a href="#">January 2021</a></li>
+              <li><a href="#">December 2020</a></li>
+              <li><a href="#">November 2020</a></li>
+              <li><a href="#">October 2020</a></li>
+              <li><a href="#">September 2020</a></li>
+              <li><a href="#">August 2020</a></li>
+              <li><a href="#">July 2020</a></li>
+              <li><a href="#">June 2020</a></li>
+              <li><a href="#">May 2020</a></li>
+              <li><a href="#">April 2020</a></li>
+            </ol>
+          </div>
+
+          <div class="p-4">
+            <h4 class="fst-italic">SNS</h4>
+            <ol class="list-unstyled">
+              <li><a href="#">Nakajin</a></li>
+              <li><a href="#">Fukase</a></li>
+              <li><a href="#">Saori</a></li>
+              <li><a href="#">DJ LOVE</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="py-5 text-center text-body-secondary bg-body-tertiary">
+    <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a
+        href="https://twitter.com/mdo">@Keita</a>.</p>
+    <p class="mb-0">
+      <a href="#">Back to top</a>
+    </p>
+  </footer>
+  <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
